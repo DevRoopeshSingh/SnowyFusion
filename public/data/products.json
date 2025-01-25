@@ -1,0 +1,30 @@
+[
+  {
+    "img": "ice-gola",
+    "label": "Ice Gola",
+    "description": "A refreshing fusion of ice and flavors.",
+    "price": "₹30",
+    "category": "gola"
+  },
+  {
+    "img": "waffle",
+    "label": "Waffle",
+    "description": "Crisp on the outside, soft inside, with unique toppings.",
+    "price": "₹80",
+    "category": "dessert"
+  },
+  {
+    "img": "wrap",
+    "label": "Wrap",
+    "description": "A perfect blend of taste and convenience.",
+    "price": "₹60",
+    "category": "snack"
+  },
+  {
+    "img": "boba-tea",
+    "label": "Boba Tea",
+    "description": "Traditional tea with a modern twist of boba pearls.",
+    "price": "₹70",
+    "category": "drink"
+  }
+]

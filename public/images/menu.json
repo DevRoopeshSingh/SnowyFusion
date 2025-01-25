@@ -1,0 +1,210 @@
+[
+  {
+    "category": "🌟 Classic Gola",
+    "items": [
+      {
+        "name": "Classic Gola",
+        "price": "₹30",
+        "description": "Crushed Ice with your choice of syrup: Kala Khatta, Kachi Keri, Strawberry, Mango Ripe, Chocolate",
+        "image": "classic_gola.png",
+        "isVegetarian": true,
+        "isSpicy": false,
+        "calories": "120",
+        "preparationTime": "5 mins",
+        "popular": true,
+        "customizations": [
+          "Extra syrup",
+          "Less sweet",
+          "Double flavor"
+        ],
+        "allergens": ["None"]
+      }
+    ]
+  },
+  {
+    "category": "💎 Premium Gola",
+    "items": [
+      {
+        "name": "Premium Gola",
+        "price": "₹50",
+        "description": "Crushed Ice with premium toppings: Belgium Chocolate Sauce, Kesar Syrup, Milk Malai, Cashews, Dark Chocolate Shavings",
+        "image": "premium_gola.png",
+        "isVegetarian": true,
+        "isSpicy": false,
+        "calories": "180",
+        "preparationTime": "7 mins",
+        "popular": true,
+        "customizations": [
+          "Extra toppings",
+          "Less sweet",
+          "No nuts"
+        ],
+        "allergens": ["Nuts", "Milk"]
+      }
+    ]
+  },
+  {
+    "category": "🔥 Fusion Gola",
+    "items": [
+      {
+        "name": "Fusion Gola",
+        "price": "₹70",
+        "description": "Crushed Ice with fusion toppings: Choco Berry Sauce, Malai, Caramel Syrup, Cashew, Double Chocolate",
+        "image": "fusion_gola.png"
+      }
+    ]
+  },
+  {
+    "category": "🌯 Wraps",
+    "items": [
+      {
+        "name": "Paneer Fajita Wrap",
+        "price": "₹70",
+        "description": "Paneer cubes with fajita seasoning, capsicum, onion, in a tortilla",
+        "image": "paneer_wrap.png",
+        "isVegetarian": true,
+        "isSpicy": true,
+        "calories": "320",
+        "preparationTime": "12 mins",
+        "popular": true,
+        "customizations": [
+          "Extra cheese",
+          "Extra spicy",
+          "No onions"
+        ],
+        "allergens": ["Milk", "Gluten"]
+      },
+      {
+        "name": "Cheese Aloo Wrap",
+        "price": "₹60",
+        "description": "Mashed potatoes with grated cheese, wrapped in a tortilla",
+        "image": "aloo_wrap.png"
+      }
+    ]
+  },
+  {
+    "category": "🧇 Waffles",
+    "items": [
+      {
+        "name": "Classic Belgian Waffle",
+        "price": "₹80",
+        "description": "Served with syrup",
+        "image": "classic_waffle.png"
+      },
+      {
+        "name": "Nutella Waffle",
+        "price": "₹90",
+        "description": "Classic waffle with Nutella spread",
+        "image": "nutella_waffle.png",
+        "isVegetarian": true,
+        "isSpicy": false,
+        "calories": "450",
+        "preparationTime": "10 mins",
+        "popular": true,
+        "customizations": [
+          "Extra Nutella",
+          "Add banana",
+          "Add whipped cream"
+        ],
+        "allergens": ["Nuts", "Milk", "Gluten", "Eggs"]
+      },
+      {
+        "name": "Choco Chip Waffle",
+        "price": "₹90",
+        "description": "Waffle with chocolate chips mixed in",
+        "image": "choco_waffle.png"
+      }
+    ]
+  },
+  {
+    "category": "🥟 Momos",
+    "items": [
+      {
+        "name": "Classic Veg Momos",
+        "price": "₹50",
+        "description": "Vegetable stuffed momos",
+        "image": "veg_momos.png"
+      },
+      {
+        "name": "Corn Cheese Momos",
+        "price": "₹60",
+        "description": "Momos stuffed with corn and cheese",
+        "image": "cheese_momos.png"
+      }
+    ]
+  },
+  {
+    "category": "🍔 Burgers",
+    "items": [
+      {
+        "name": "Veg Classic Burger",
+        "price": "₹60",
+        "description": "Vegetarian patty with lettuce and sauces",
+        "image": "veg_burger.png"
+      },
+      {
+        "name": "Cheesy Burger",
+        "price": "₹70",
+        "description": "Classic veg burger with a slice of cheese",
+        "image": "cheese_burger.png"
+      }
+    ]
+  },
+  {
+    "category": "🧋 Boba Tea",
+    "items": [
+      {
+        "name": "Classic Milk Tea",
+        "price": "₹100",
+        "description": "Milk tea with tapioca pearls",
+        "image": "milk_boba.png",
+        "isVegetarian": true,
+        "isSpicy": false,
+        "calories": "280",
+        "preparationTime": "8 mins",
+        "popular": true,
+        "customizations": [
+          "Sugar level (30%, 50%, 70%, 100%)",
+          "Ice level (Less, Normal, Extra)",
+          "Extra boba"
+        ],
+        "allergens": ["Milk"]
+      },
+      {
+        "name": "Brown Sugar Boba",
+        "price": "₹120",
+        "description": "Brown sugar flavored tea with boba",
+        "image": "brown_sugar_boba.png"
+      },
+      {
+        "name": "Mango/Strawberry Boba",
+        "price": "₹110",
+        "description": "Milk tea with mango or strawberry syrup and boba",
+        "image": "fruit_boba.png"
+      }
+    ]
+  },
+  {
+    "category": "☕ Coffee",
+    "items": [
+      {
+        "name": "Black Coffee",
+        "price": "₹40",
+        "description": "Simple brewed coffee",
+        "image": "black_coffee.png"
+      },
+      {
+        "name": "Latte Coffee",
+        "price": "₹50",
+        "description": "Coffee with steamed milk",
+        "image": "latte.png"
+      },
+      {
+        "name": "Cappuccino",
+        "price": "₹80",
+        "description": "Coffee with frothed milk and cocoa powder",
+        "image": "cappuccino.png"
+      }
+    ]
+  }
+]

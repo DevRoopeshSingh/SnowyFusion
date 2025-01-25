@@ -1,0 +1,20 @@
+[
+  {
+    "platform": "Facebook",
+    "url": "https://www.facebook.com/snowyfusion",
+    "icon": "FaFacebookF",
+    "color": "text-blue-500"
+  },
+  {
+    "platform": "Twitter",
+    "url": "https://www.twitter.com/snowyfusion",
+    "icon": "FaTwitter",
+    "color": "text-blue-400"
+  },
+  {
+    "platform": "Instagram",
+    "url": "https://www.instagram.com/snowyfusion",
+    "icon": "FaInstagram",
+    "color": "text-pink-500"
+  }
+]
