@@ -1,11 +1,23 @@
 import { motion } from "framer-motion";
 
-export const LoadingSpinner = () => (
-  <div className="min-h-screen flex items-center justify-center">
+const LoadingSpinner = ({
+  size = "w-12 h-12",
+  color = "border-white",
+  fullScreen = true,
+  speed = 1,
+}) => (
+  <div
+    role="status"
+    aria-label="Loading"
+    className={`${
+      fullScreen ? "min-h-screen" : ""
+    } flex items-center justify-center`}>
     <motion.div
       animate={{ rotate: 360 }}
-      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-      className="w-12 h-12 border-4 border-white rounded-full border-t-transparent"
+      transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
+      className={`${size} border-4 ${color} rounded-full border-t-transparent`}
     />
   </div>
-); 
+);
+
+export default LoadingSpinner;

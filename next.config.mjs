@@ -3,6 +3,7 @@ const nextConfig = {
   reactStrictMode: true, // Enables React's Strict Mode for development
   experimental: {
     appDir: false, // Ensure the app directory isn't used (as you're using `pages`)
+    fontOptimization: false,
   },
   images: {
     domains: ["example.com"], // Replace with domains for external images if applicable

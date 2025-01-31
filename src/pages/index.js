@@ -12,7 +12,7 @@ import {
 } from "react-icons/fa";
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
-import { LoadingSpinner } from "../components/LoadingSpinner";
+import LoadingSpinner from "../components/LoadingSpinner";
 import { ProductCard } from "../components/ProductCard";
 import Footer from "../components/Footer";
 

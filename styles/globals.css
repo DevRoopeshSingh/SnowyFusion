@@ -55,8 +55,9 @@
 :root {
     --primary-color: #004aad;
     --secondary-color: #5de0e6;
-    --text-color: #333333;
     --background-light: #f9fafb;
+    --text-color-dark: #222222; /* Or #111111 */
+    --text-color-light: #ffffff;
 }
 
 /* Base Styles */
@@ -76,7 +77,8 @@
     }
 
     h1, h2, h3, h4, h5, h6 {
-        @apply font-['Poppins'] font-semibold text-gray-800 leading-tight mb-2;
+        @apply font-['Poppins'] font-semibold bg-clip-text text-transparent 
+        bg-gradient-to-r from-[#004aad] to-[#5de0e6] leading-tight mb-2;
     }
 }
 
@@ -87,19 +89,21 @@
     }
 
     .btn-primary {
-        @apply bg-blue-600 text-white px-6 py-2 rounded-lg 
-               hover:bg-blue-700 transition-colors duration-300
-               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+        @apply bg-gradient-to-r from-[#004aad] to-[#5de0e6] text-white px-6 py-2 
+               rounded-lg hover:bg-gradient-to-r hover:from-[#003d8f] hover:to-[#4abcc2] 
+               transition-all duration-300 transform hover:scale-105 
+               focus:outline-none focus:ring-2 focus:ring-[#5de0e6] focus:ring-offset-2;
     }
 
     .card {
-        @apply bg-white rounded-xl shadow-md p-6 
-               hover:shadow-lg transition-shadow duration-300;
+        @apply bg-white rounded-xl shadow-md p-6 hover:shadow-lg 
+               transition-all duration-300 transform hover:-translate-y-1;
     }
 
-    .menu-item {
-        @apply flex items-start gap-4 p-4 rounded-lg 
-               hover:bg-gray-50 transition-colors duration-200;
+    .gradient-border {
+        @apply relative bg-white before:absolute before:inset-0 
+               before:bg-gradient-to-r before:from-[#004aad] before:to-[#5de0e6] 
+               before:rounded-xl before:-z-10 before:blur-md;
     }
 }
 
@@ -117,6 +121,12 @@
     to { opacity: 1; }
 }
 
+@keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 @keyframes slideUp {
     from {
         transform: translateY(20px);
@@ -126,6 +136,11 @@
         transform: translateY(0);
         opacity: 1;
     }
+}
+
+.gradient-animate {
+    background-size: 200% 200%;
+    animation: gradient-shift 15s ease infinite;
 }
 
 /* Scrollbar */
@@ -138,16 +153,17 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    @apply bg-gray-400 rounded-full;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-500;
+    @apply bg-gradient-to-b from-[#004aad] to-[#5de0e6] rounded-full;
 }
 
 /* Print Styles */
 @media print {
     .no-print {
-        display: none;
+        display: none !important;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
     }
 }

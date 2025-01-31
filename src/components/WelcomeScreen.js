@@ -4,6 +4,7 @@ import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
 
+
 // Newsletter subscription component
 const Newsletter = () => {
   const [email, setEmail] = useState("");
@@ -16,7 +17,7 @@ const Newsletter = () => {
     if (!email.includes("@")) {
       setStatus("Please enter a valid email address.");
       setIsSubmitting(false);
-      return;
+      return; 
     }
     // Here you would typically send this to your backend.
     // For this example, we'll just simulate a delay.
@@ -77,7 +78,17 @@ const Navbar = React.memo(() => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const menuItems = ["Menu", "About", "Contact"];
+  // Define navigation items with proper paths
+  const menuItems = [
+    { name: "Menu", path: "/menu" },
+    { name: "About", path: "/about" },
+    { name: "Contact", path: "/contact" },
+  ];
+
+  // Close mobile menu when navigating
+  const handleNavigation = () => {
+    setIsMenuOpen(false);
+  };
 
   return (
     <header
@@ -109,14 +120,20 @@ const Navbar = React.memo(() => {
           </svg>
         </button>
 
+        {/* Desktop Navigation */}
         <ul className="hidden md:flex space-x-6 text-white text-lg">
           {menuItems.map((item) => (
-            <li key={item} className="cursor-pointer hover:underline">
-              <Link href={`/${item.toLowerCase()}`}>{item}</Link>
+            <li key={item.name} className="hover:underline">
+              <Link
+                href={item.path}
+                className="px-3 py-2 transition-colors hover:text-teal-200">
+                {item.name}
+              </Link>
             </li>
           ))}
         </ul>
 
+        {/* Mobile Navigation */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
@@ -127,9 +144,14 @@ const Navbar = React.memo(() => {
               <ul className="py-2">
                 {menuItems.map((item) => (
                   <li
-                    key={item}
-                    className="px-4 py-2 text-white hover:bg-teal-700">
-                    <Link href={`/${item.toLowerCase()}`}>{item}</Link>
+                    key={item.name}
+                    className="px-4 py-2 hover:bg-teal-700 transition-colors">
+                    <Link
+                      href={item.path}
+                      onClick={handleNavigation}
+                      className="block w-full">
+                      {item.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -231,13 +253,13 @@ const MenuCard = ({ category, index }) => (
 );
 
 // Main Welcome Page Component
-const WelcomePage = ({ menuCategories }) => {
+const WelcomePage = ({ onContinue, menuCategories }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 500); // Reduced from 1000ms to 500ms for quicker feedback
+    }, 500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -247,44 +269,80 @@ const WelcomePage = ({ menuCategories }) => {
         <title>Snowy Fusion | Fusion of Flavors</title>
         <meta
           name="description"
-          content="Explore a fusion of delightful flavors including Golas, Wraps, and Waffles."
+          content="Located in Naigaon East's heart, Snowy Fusion serves ice golas, waffles, wraps, momos, burgers, and boba tea. Experience traditional favorites with modern twists."
         />
-        <meta property="og:title" content="Snowy Fusion | Fusion of Flavors" />
+        <meta
+          property="og:title"
+          content="Snowy Fusion | Your Craving, Our Fusion"
+        />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="/images/hero1.jpg" />
-        <meta property="og:url" content="your-site-url.com" />
+        <meta property="og:url" content="https://snowyfusion.com" />
         <meta name="twitter:card" content="summary_large_image" />
         <script type="application/ld+json">
           {`
-            {
-              "@context": "https://schema.org",
-              "@type": "Restaurant",
-              "name": "Snowy Fusion",
-              "image": "/images/hero1.jpg",
-              "telephone": "your-phone-number",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "Your Street Address",
-                "addressLocality": "Your City",
-                "addressRegion": "Your State",
-                "postalCode": "Your Postal Code",
-                "addressCountry": "Your Country"
+              {
+                "@context": "https://schema.org",
+                "@type": "Restaurant",
+                "name": "Snowy Fusion",
+                "description": "Blending traditional favorites with modern twists in Naigaon East",
+                "image": "/images/hero1.jpg",
+                "telephone": "+91 73024 66350",
+                "address": {
+                  "@type": "PostalAddress",
+                  "streetAddress": "Shop No. 5, Naigaon East Main Road",
+                  "addressLocality": "Naigaon East",
+                  "addressRegion": "Maharashtra",
+                  "postalCode": "401208",
+                  "addressCountry": "India"
+                },
+                "servesCuisine": ["Ice Golas", "Waffles", "Wraps", "Momo", "Burgers", "Boba Tea"],
+                "openingHours": "Mo-Su 11:00-23:00"
               }
-            }
-          `}
+            `}
         </script>
       </Head>
+
       <div className="min-h-screen bg-gradient-to-b from-red-400 to-teal-400 text-white">
         <Navbar />
         <HeroSlider />
-        <section className="container mx-auto my-10 px-4">
+
+        {/* Fixed Explore Now Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="fixed bottom-8 left-0 right-0 text-center z-50">
+          <button
+            onClick={onContinue}
+            className="bg-white/20 backdrop-blur-lg px-8 py-3 rounded-full 
+                       text-lg font-semibold hover:bg-white/30 transition-all
+                       flex items-center gap-2 mx-auto shadow-lg hover:shadow-xl">
+            Explore Now
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor">
+              <path
+                fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </button>
+        </motion.div>
+
+        {/* Menu Section */}
+        <section className="container mx-auto my-10 px-4 relative pt-16">
           <motion.h2
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5 }}
             className="text-3xl font-bold text-center mb-8">
-            Explore Our Menu
+            Explore Our Fusion Menu
           </motion.h2>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {isLoading ? (
               <div className="col-span-full text-center">
@@ -305,11 +363,29 @@ const WelcomePage = ({ menuCategories }) => {
             )}
           </div>
         </section>
+
+        {/* About Section */}
+        <section className="container mx-auto my-16 px-4 text-center">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}>
+            <h2 className="text-3xl font-bold mb-6">Our Story</h2>
+            <p className="text-lg max-w-2xl mx-auto">
+              At Snowy Fusion, we bring together the finest flavors to satisfy
+              your cravings. Located in Naigaon East's heart, we serve a
+              delightful range of ice golas, waffles, wraps, momos, burgers, and
+              refreshing boba tea. Our menu blends traditional favorites with
+              modern twists, ensuring a unique culinary experience for every
+              visitor.
+            </p>
+          </motion.div>
+        </section>
+
         <Newsletter />
       </div>
     </>
   );
 };
-WelcomePage.displayName = "WelcomePage";
 
 export default WelcomePage;
