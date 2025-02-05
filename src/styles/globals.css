@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base Styles */
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-gradient-to-br from-blue-50 via-white to-teal-50/30 
+           text-gray-800 font-['Inter'] antialiased min-h-screen
+           overflow-x-hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-['Poppins'] font-bold;
+  }
+
+  /* Dark mode overrides */
+  .dark body {
+    @apply bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 
+           text-gray-100;
+  }
+
+  .dark .frost-bg {
+    @apply bg-gray-800/80 border-gray-700/20;
+  }
+
+  .dark .snow-card {
+    @apply bg-gray-800/90 border-gray-700/20;
+  }
+
+  .dark .glass-card {
+    @apply bg-gray-800/40 border-gray-700/30;
+  }
+
+  .dark .gradient-text {
+    @apply from-blue-400 to-teal-300;
+  }
+}
+
+/* Custom Components */
+@layer components {
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r 
+           from-blue-600 to-teal-400;
+  }
+
+  .frost-bg {
+    @apply bg-white/80 backdrop-blur-md border border-white/20
+           shadow-[0_8px_32px_0_rgba(31,38,135,0.07)];
+  }
+
+  .snow-card {
+    @apply bg-white/90 rounded-xl shadow-lg hover:shadow-xl
+           transition-all duration-300 backdrop-blur-sm
+           border border-white/20 hover:-translate-y-1;
+  }
+
+  .menu-item {
+    @apply snow-card p-6 relative overflow-hidden;
+    &::before {
+      content: '';
+      @apply absolute inset-0 bg-gradient-to-r from-blue-50/50 to-transparent
+             opacity-0 transition-opacity duration-300;
+    }
+    &:hover::before {
+      @apply opacity-100;
+    }
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-blue-600 to-teal-400
+           text-white font-semibold px-6 py-3 rounded-full
+           hover:from-blue-700 hover:to-teal-500 
+           transition-all duration-300 transform hover:scale-105
+           shadow-lg hover:shadow-xl;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-blue-600 text-blue-600
+           font-semibold px-6 py-3 rounded-full
+           hover:bg-blue-50 transition-all duration-300;
+  }
+
+  .snowflake {
+    @apply absolute pointer-events-none animate-snowfall;
+  }
+
+  .glass-card {
+    @apply bg-white/40 backdrop-blur-md rounded-xl
+           border border-white/30 shadow-lg
+           hover:bg-white/50 transition-all duration-300;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold mb-6 gradient-text;
+  }
+
+  /* Dark mode component styles */
+  .dark .menu-item {
+    @apply hover:bg-gray-800/50;
+    &::before {
+      @apply from-gray-900/50;
+    }
+  }
+
+  .dark .btn-primary {
+    @apply from-blue-500 to-teal-400
+           hover:from-blue-600 hover:to-teal-500;
+  }
+
+  .dark .btn-secondary {
+    @apply border-blue-400 text-blue-400
+           hover:bg-blue-900/20;
+  }
+
+  /* Dark mode snowflakes */
+  .dark .snowflake {
+    @apply bg-gray-400/40;
+  }
+}
+
+/* Animations */
+@keyframes snowfall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.animate-snowfall {
+  animation: snowfall 15s linear infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-blue-50;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gradient-to-b from-blue-500 to-teal-400 
+         rounded-full hover:from-blue-600 hover:to-teal-500;
+} 

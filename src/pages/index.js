@@ -1,149 +1,256 @@
-// src/pages/index.js
+import { useState, useCallback, useEffect } from "react";
+import dynamic from "next/dynamic";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import SnowEffect from "@/components/effects/SnowEffect";
+import WhatsAppButton from "@/components/common/WhatsAppButton";
+import Testimonials from "@/components/home/Testimonials";
+import SeasonalSpecials from "@/components/home/SeasonalSpecials";
+import SpecialOffers from "@/components/home/SpecialOffers";
+import Loading from "@/components/common/Loading";
+import CartDrawer from "@/components/cart/CartDrawer";
+import QuickViewModal from "@/components/menu/QuickViewModal";
+import SearchOverlay from "@/components/search/SearchOverlay";
+import MenuSection from "@/components/menu/MenuSection";
 
-import Image from "next/image";
-import Link from "next/link";
-import Head from "next/head";
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaInstagram,
-  FaShoppingCart,
-  FaUtensils,
-} from "react-icons/fa";
-import { motion, useAnimation } from "framer-motion";
-import { useEffect, useState } from "react";
-import LoadingSpinner from "../components/LoadingSpinner";
-import { ProductCard } from "../components/ProductCard";
-import Footer from "../components/Footer";
+// Dynamic imports
+const HeroSection = dynamic(() => import("@/components/home/HeroSection"));
+const Menu = dynamic(() => import("@/components/menu/Menu"));
+const FeaturedItems = dynamic(() => import("@/components/home/FeaturedItems"));
 
-export default function Home({ products, socialMediaLinks, menuCategories }) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+// Dynamically import sections to avoid any potential SSR issues
+const ContactSection = dynamic(() =>
+  import("@/components/contact/ContactSection")
+);
 
-  const controls = useAnimation();
+export default function Home({ menuData, error }) {
+  const [activeSection, setActiveSection] = useState("home");
+  const [cartItems, setCartItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredMenu, setFilteredMenu] = useState(menuData);
+
+  const handleMenuClick = useCallback(() => {
+    setActiveSection("menu");
+  }, []);
+
+  const addToOrder = useCallback((item) => {
+    setCartItems((prev) => [...prev, { ...item, id: Date.now() }]);
+  }, []);
+
+  const removeFromOrder = useCallback((itemId) => {
+    setCartItems((prev) => prev.filter((item) => item.id !== itemId));
+  }, []);
 
   useEffect(() => {
-    const initializePage = async () => {
-      try {
-        setIsLoading(true);
-        await controls.start({
-          opacity: 1,
-          y: 0,
-          transition: { duration: 0.8, ease: "easeOut" },
-        });
-      } catch (err) {
-        setError("Failed to load animations");
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
+    // Simulate loading time for dynamic imports
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      setFilteredMenu(menuData);
+      return;
+    }
+
+    const query = searchQuery.toLowerCase();
+    const filtered = {
+      categories: menuData.categories
+        .map((category) => ({
+          ...category,
+          items: category.items.filter(
+            (item) =>
+              item.name.toLowerCase().includes(query) ||
+              item.description.toLowerCase().includes(query)
+          ),
+        }))
+        .filter((category) => category.items.length > 0),
     };
 
-    initializePage();
-  }, [controls]);
+    setFilteredMenu(filtered);
+  }, [searchQuery, menuData]);
 
+  // Add error handling in the UI
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="text-center p-8">Error: {error}</div>;
+  }
+
+  // Add loading indicator in the return statement
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
-    <>
-      <Head>
-        <title>Snowy Fusion - Ice Golas, Waffles, Wraps, and Boba Tea</title>
-        <meta
-          name="description"
-          content="Explore the fusion of flavors with our Ice Golas, Waffles, Wraps, and Boba Tea at Snowy Fusion in Naigaon East."
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta property="og:title" content="Snowy Fusion" />
-        <meta
-          property="og:description"
-          content="Your Craving, Our Fusion in Naigaon East!"
-        />
-        <meta property="og:image" content="/snowy-fusion-logo.png" />
-      </Head>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-teal-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <SnowEffect />
+      <Header
+        activeSection={activeSection}
+        setActiveSection={setActiveSection}
+        cartCount={cartItems.length}
+        onCartClick={() => setIsCartOpen(true)}
+        onSearch={setSearchQuery}
+        onSearchClick={() => setIsSearchOpen(true)}
+      />
 
-      <main className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 text-white">
-        {isLoading ? (
-          <LoadingSpinner />
-        ) : (
-          <div className="container mx-auto px-4 py-12 md:px-8 lg:px-12">
-            <motion.header
-              className="text-center mb-10 md:mb-16"
-              initial={{ opacity: 0, y: -50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1 }}>
-              <motion.div animate={controls}>
-                <Image
-                  src="/snowy-fusion-logo.png"
-                  alt="Snowy Fusion Logo"
-                  width={200}
-                  height={200}
-                  className="mx-auto mb-4 rounded-full border-4 border-white"
-                  priority
-                />
-              </motion.div>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold drop-shadow-lg">
-                Welcome to Snowy Fusion
-              </h1>
-              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl mt-4">
-                Your Craving, Our Fusion in Naigaon East!
-              </p>
-            </motion.header>
+      <main>
+        {activeSection === "home" && (
+          <>
+            <HeroSection onMenuClick={handleMenuClick} />
+            <SeasonalSpecials />
+            <FeaturedItems
+              items={
+                (menuData?.categories || [])
+                  .flatMap((category) => category?.items || [])
+                  .filter((item) => item?.popular) || []
+              }
+            />
+            <SpecialOffers />
+            <Testimonials />
+          </>
+        )}
 
-            <section className="mb-16">
-              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center md:text-left">
-                Our Delights
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                {products.map(({ img, label, description }, index) => (
-                  <ProductCard
-                    key={index}
-                    img={img}
-                    label={label}
-                    description={description}
-                    delay={index * 0.1}
-                  />
-                ))}
-              </div>
-            </section>
+        {activeSection === "menu" && menuData && (
+          <MenuSection menuData={menuData} addToOrder={addToOrder} />
+        )}
 
-            <div className="mt-8 mb-16 flex flex-wrap justify-center space-y-4 space-x-4 sm:space-y-0 sm:space-x-6 md:justify-start">
-              <Link
-                href="/menu"
-                prefetch={true}
-                className="bg-indigo-700 hover:bg-indigo-800 text-white px-6 py-3 rounded-full shadow-lg transform transition-transform hover:scale-110 flex items-center touch-friendly">
-                <FaUtensils className="mr-2" /> Explore Our Menu
-              </Link>
-              <Link
-                href="/cart"
-                prefetch={true}
-                className="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-full shadow-lg transform transition-transform hover:scale-110 flex items-center touch-friendly">
-                <FaShoppingCart className="mr-2" /> View Cart
-              </Link>
-            </div>
-          </div>
+        {activeSection === "contact" && (
+          <ContactSection
+            cartItems={cartItems}
+            removeFromOrder={removeFromOrder}
+          />
         )}
       </main>
-      <Footer socialMediaLinks={socialMediaLinks} />
-    </>
+
+      <WhatsAppButton />
+      <Footer />
+
+      <CartDrawer
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        items={cartItems}
+        onRemove={removeFromOrder}
+      />
+
+      <QuickViewModal
+        item={selectedItem}
+        isOpen={isQuickViewOpen}
+        onClose={() => {
+          setIsQuickViewOpen(false);
+          setSelectedItem(null);
+        }}
+        onAddToCart={addToOrder}
+      />
+
+      <SearchOverlay
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        menuData={menuData}
+      />
+    </div>
   );
 }
 
 export async function getStaticProps() {
-  const products = require("../../public/data/products.json");
-  const socialMediaLinks = require("../../public/data/socialMediaLinks.json");
-  const menuCategories = require("../../public/data/menuCategories.json");
-  return {
-    props: {
-      products,
-      socialMediaLinks,
-      menuCategories,
-    },
-  };
-}
+  try {
+    const menuData = await import("../../public/data/menu.json");
+    const defaultMenuData = {
+      categories: [],
+    };
 
-Home.propTypes = {
-  // Add if you have props
-};
+    // Transform the array structure to categories
+    const combinedMenuData = {
+      categories: menuData.default
+        .map((category) => {
+          if (!category) return null;
+
+          if (category.items) {
+            // This is a category with nested items
+            return {
+              name: category.category || "Uncategorized",
+              description: category.description || "",
+              items: category.items.map((item) => ({
+                ...item,
+                id:
+                  item.id ||
+                  `${category.category || "item"}-${item.name || Date.now()}`
+                    .toLowerCase()
+                    .replace(/\s+/g, "-"),
+                description: item.description || "",
+                price: item.price || "₹0",
+                image:
+                  item.image || "/images/placeholders/food-placeholder.jpg",
+                isVegetarian: item.isVegetarian || false,
+                isSpicy: item.isSpicy || false,
+                popular: item.popular || false,
+                calories: item.calories || "N/A",
+                preparationTime: item.preparationTime || "5-10 mins",
+                customizations: item.customizations || [],
+              })),
+            };
+          } else {
+            // This is a category that is also an item
+            return {
+              name: category.category || "Menu",
+              description: category.description || "",
+              items: [
+                {
+                  id:
+                    category.id ||
+                    (category.name
+                      ? category.name.toLowerCase().replace(/\s+/g, "-")
+                      : `item-${Date.now()}`),
+                  name: category.name || "Unnamed Item",
+                  description: category.description || "",
+                  price: category.price || "₹0",
+                  image:
+                    category.image ||
+                    "/images/placeholders/food-placeholder.jpg",
+                  isVegetarian: category.isVegetarian || false,
+                  isSpicy: category.isSpicy || false,
+                  popular: category.popular || false,
+                  calories: category.calories || "N/A",
+                  preparationTime: category.preparationTime || "5-10 mins",
+                  customizations: category.customizations || [],
+                },
+              ],
+            };
+          }
+        })
+        .filter(Boolean)
+        .filter((category) => category.items && category.items.length > 0),
+    };
+
+    // Ensure all values are serializable
+    const serializedData = JSON.parse(JSON.stringify(combinedMenuData));
+
+    console.log(
+      "Transformed Menu Data:",
+      JSON.stringify(serializedData, null, 2)
+    );
+
+    return {
+      props: {
+        menuData: serializedData || defaultMenuData,
+      },
+      revalidate: 3600,
+    };
+  } catch (error) {
+    console.error("Error loading menu data:", error);
+    return {
+      props: {
+        menuData: {
+          categories: [],
+        },
+        error: "Failed to load menu data",
+      },
+    };
+  }
+}

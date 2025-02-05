@@ -51,13 +51,15 @@
     font-display: swap;
 }
 
-/* Custom Properties */
+/* Theme Colors */
 :root {
-    --primary-color: #004aad;
-    --secondary-color: #5de0e6;
-    --background-light: #f9fafb;
-    --text-color-dark: #222222; /* Or #111111 */
-    --text-color-light: #ffffff;
+    --primary: #004aad;
+    --primary-light: #5de0e6;
+    --secondary: #00a5e0;
+    --accent: #ff6b6b;
+    --background: #f8fafc;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
 }
 
 /* Base Styles */
@@ -72,13 +74,12 @@
     }
 
     body {
-        @apply font-['Inter'] bg-gray-50 text-gray-800 
-               leading-relaxed overflow-x-hidden min-h-screen;
+        @apply bg-gradient-to-br from-blue-50 via-white to-teal-50 
+               text-gray-800 font-['Inter'] antialiased min-h-screen;
     }
 
     h1, h2, h3, h4, h5, h6 {
-        @apply font-['Poppins'] font-semibold bg-clip-text text-transparent 
-        bg-gradient-to-r from-[#004aad] to-[#5de0e6] leading-tight mb-2;
+        @apply font-['Poppins'] font-bold;
     }
 }
 
@@ -88,22 +89,51 @@
         @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
     }
 
+    .gradient-text {
+        @apply bg-clip-text text-transparent bg-gradient-to-r 
+               from-blue-600 to-teal-400;
+    }
+
+    .frost-bg {
+        @apply bg-white/80 backdrop-blur-md;
+    }
+
+    .snow-card {
+        @apply bg-white/90 rounded-xl shadow-lg hover:shadow-xl
+               transition-all duration-300 backdrop-blur-sm
+               border border-white/20;
+    }
+
     .btn-primary {
-        @apply bg-gradient-to-r from-[#004aad] to-[#5de0e6] text-white px-6 py-2 
-               rounded-lg hover:bg-gradient-to-r hover:from-[#003d8f] hover:to-[#4abcc2] 
-               transition-all duration-300 transform hover:scale-105 
-               focus:outline-none focus:ring-2 focus:ring-[#5de0e6] focus:ring-offset-2;
+        @apply bg-gradient-to-r from-blue-600 to-teal-400
+               text-white font-semibold px-6 py-3 rounded-full
+               hover:from-blue-700 hover:to-teal-500
+               transition-all duration-300 transform hover:scale-105
+               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
     }
 
-    .card {
-        @apply bg-white rounded-xl shadow-md p-6 hover:shadow-lg 
-               transition-all duration-300 transform hover:-translate-y-1;
+    .btn-secondary {
+        @apply border-2 border-blue-600 text-blue-600
+               font-semibold px-6 py-3 rounded-full
+               hover:bg-blue-50 transition-all duration-300
+               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
     }
 
-    .gradient-border {
-        @apply relative bg-white before:absolute before:inset-0 
-               before:bg-gradient-to-r before:from-[#004aad] before:to-[#5de0e6] 
-               before:rounded-xl before:-z-10 before:blur-md;
+    .nav-link {
+        @apply text-gray-600 hover:text-blue-600 transition-colors
+               font-medium px-4 py-2 rounded-full hover:bg-blue-50;
+    }
+
+    .nav-link-active {
+        @apply text-blue-600 bg-blue-50;
+    }
+
+    .menu-card {
+        @apply snow-card p-6 hover:-translate-y-1;
+    }
+
+    .section-title {
+        @apply text-3xl md:text-4xl font-bold mb-6 gradient-text text-center;
     }
 }
 
@@ -143,27 +173,71 @@
     animation: gradient-shift 15s ease infinite;
 }
 
+@keyframes snowfall {
+    0% {
+        transform: translateY(-10px) rotate(0deg);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(10px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.animate-snow {
+    animation: snowfall 3s infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
-    width: 8px;
+    @apply w-2;
 }
 
 ::-webkit-scrollbar-track {
-    @apply bg-gray-100;
+    @apply bg-blue-50;
 }
 
 ::-webkit-scrollbar-thumb {
-    @apply bg-gradient-to-b from-[#004aad] to-[#5de0e6] rounded-full;
+    @apply bg-gradient-to-b from-blue-500 to-teal-400 
+           rounded-full hover:from-blue-600 hover:to-teal-500;
+}
+
+/* Loading Animation */
+.loader {
+    @apply w-12 h-12 border-4 border-blue-200 rounded-full
+           border-t-blue-600 animate-spin;
+}
+
+/* Media Queries */
+@media (max-width: 640px) {
+    .container {
+        @apply px-4;
+    }
 }
 
 /* Print Styles */
 @media print {
     .no-print {
-        display: none !important;
+        @apply hidden;
     }
     
     body {
-        background: white !important;
-        color: black !important;
+        @apply bg-white text-black;
     }
 }

@@ -1,43 +1,17 @@
 [
   {
-    "name": "Classic Golas",
-    "description": "Refreshing flavors like Kala Khatta, Kachi Keri, and Strawberry.",
-    "price": "₹30",
-    "image": "/images/classic_golas.png",
-    "category": "gola",
-    "popular": true,
-    "badges": ["Bestseller", "Summer Special"],
-    "availableTime": "11 AM - 10 PM",
-    "preparationTime": "2-3 mins"
+    "id": "signature-golas",
+    "name": "Signature Golas",
+    "description": "Our handcrafted ice treats with premium ingredients"
   },
   {
-    "name": "Premium Golas",
-    "description": "Delightful options like Belgium Chocolate and Kesar Malai.",
-    "price": "₹50",
-    "image": "/images/premium_golas.png"
+    "id": "fusion-drinks",
+    "name": "Fusion Drinks",
+    "description": "Innovative beverages with a winter twist"
   },
   {
-    "name": "Fusion Golas",
-    "description": "Unique blends like Choco Berry Blast and Mango Magic.",
-    "price": "₹70",
-    "image": "/images/fusion_golas.png"
-  },
-  {
-    "name": "Wraps",
-    "description": "Try our cheesy Aloo Wrap or Paneer Fajita Wrap.",
-    "price": "₹50",
-    "image": "/images/wraps.png"
-  },
-  {
-    "name": "Waffles",
-    "description": "Indulge in Choco Chip, Nutella, or Double Trouble Waffles.",
-    "price": "₹80",
-    "image": "/images/waffles.png"
-  },
-  {
-    "name": "Drinks Menu",
-    "description": "Sip on refreshing Boba Teas, Masala Tea, or Cappuccinos.",
-    "price": "₹10",
-    "image": "/images/drinks.png"
+    "id": "winter-specials",
+    "name": "Winter Specials",
+    "description": "Limited time seasonal offerings"
   }
 ]

@@ -1,0 +1,32 @@
+/* Theme-specific styles */
+.frost-card {
+    @apply relative overflow-hidden;
+    backdrop-filter: blur(16px);
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.9),
+        rgba(255, 255, 255, 0.6)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.glass-effect {
+    @apply relative;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.snow-gradient {
+    background: linear-gradient(
+        135deg,
+        theme('colors.snowy.light'),
+        theme('colors.snowy.DEFAULT'),
+        theme('colors.snowy.dark')
+    );
+}
+
+.text-shadow {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+} 

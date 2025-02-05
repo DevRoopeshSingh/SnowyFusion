@@ -323,5 +323,120 @@
         "allergens": ["Nuts", "Milk", "Gluten", "Eggs"]
       }
     ]
+  },
+  {
+    "categories": [
+      {
+        "name": "Signature Golas",
+        "description": "Our handcrafted ice treats with premium ingredients",
+        "items": [
+          {
+            "id": "kesar-malai-gola",
+            "name": "Kesar Malai Gola",
+            "description": "Premium saffron-infused milk gola topped with malai cream",
+            "price": "₹120",
+            "image": "kesar-malai-gola.jpg",
+            "isVegetarian": true,
+            "isSpicy": false,
+            "popular": true,
+            "calories": "280",
+            "preparationTime": "5 mins",
+            "customizations": ["Extra Malai", "Sugar Free", "Extra Dry Fruits"],
+            "sizes": [
+              { "name": "Regular", "price": "₹120" },
+              { "name": "Large", "price": "₹150" }
+            ],
+            "toppings": [
+              { "name": "Dry Fruits", "price": "₹20" },
+              { "name": "Extra Malai", "price": "₹15" },
+              { "name": "Rabdi", "price": "₹25" }
+            ]
+          },
+          {
+            "id": "g2",
+            "name": "Chocolate Avalanche",
+            "description": "Rich chocolate gola with brownie crumbs and hot fudge",
+            "price": "₹150",
+            "image": "chocolate-avalanche.jpg",
+            "isVegetarian": true,
+            "isSpicy": false,
+            "popular": true,
+            "calories": "350",
+            "preparationTime": "7 mins",
+            "customizations": [
+              "Extra Fudge",
+              "Add Nuts",
+              "Extra Brownie Crumbs"
+            ]
+          },
+          {
+            "id": "g3",
+            "name": "Masala Orange Blast",
+            "description": "Tangy orange gola with a hint of chaat masala",
+            "price": "₹100",
+            "image": "masala-orange.jpg",
+            "isVegetarian": true,
+            "isSpicy": true,
+            "calories": "200",
+            "preparationTime": "5 mins",
+            "customizations": ["Extra Masala", "Less Spicy", "Sugar Free"]
+          }
+        ]
+      },
+      {
+        "name": "Fusion Drinks",
+        "description": "Innovative beverages with a winter twist",
+        "items": [
+          {
+            "id": "d1",
+            "name": "Dragon Fruit Boba Tea",
+            "description": "Refreshing dragon fruit tea with chewy boba pearls",
+            "price": "₹180",
+            "image": "dragon-boba.jpg",
+            "isVegetarian": true,
+            "isSpicy": false,
+            "popular": true,
+            "calories": "220",
+            "preparationTime": "8 mins",
+            "customizations": ["Less Ice", "Extra Boba", "Sugar Level"]
+          },
+          {
+            "id": "d2",
+            "name": "Blue Butterfly Latte",
+            "description": "Blue pea flower tea latte with vanilla snow cream",
+            "price": "₹160",
+            "image": "blue-latte.jpg",
+            "isVegetarian": true,
+            "isSpicy": false,
+            "calories": "180",
+            "preparationTime": "6 mins",
+            "customizations": ["Oat Milk", "Extra Shot", "Sugar Free"]
+          }
+        ]
+      },
+      {
+        "name": "Winter Specials",
+        "description": "Limited time seasonal offerings",
+        "items": [
+          {
+            "id": "w1",
+            "name": "Snow Apple Cinnamon",
+            "description": "Warm apple cider with snow cream and cinnamon dust",
+            "price": "₹140",
+            "image": "snow-apple.jpg",
+            "isVegetarian": true,
+            "isSpicy": false,
+            "popular": true,
+            "calories": "240",
+            "preparationTime": "10 mins",
+            "customizations": [
+              "Extra Cinnamon",
+              "Add Caramel",
+              "Extra Snow Cream"
+            ]
+          }
+        ]
+      }
+    ]
   }
 ]
