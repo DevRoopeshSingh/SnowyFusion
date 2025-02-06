@@ -138,9 +138,9 @@ async function generatePlaceholders() {
 
 async function init() {
   try {
-    await downloadAndOptimizeImages();
+    //await downloadAndOptimizeImages();
     await generatePlaceholders();
-    console.log('Image setup completed successfully!');
+    console.log("Image setup completed successfully!");
   } catch (error) {
     console.error('Failed to set up images:', error);
     process.exit(1);
