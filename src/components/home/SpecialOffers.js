@@ -22,11 +22,10 @@ const SpecialOffers = () => {
   return (
     <section className="py-20 relative overflow-hidden">
       <div className="container mx-auto px-4">
-        <motion.h2 
+        <motion.h2
           className="section-title text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-        >
+          whileInView={{ opacity: 1, y: 0 }}>
           Special Offers
         </motion.h2>
 
@@ -38,9 +37,8 @@ const SpecialOffers = () => {
               whileInView={{ opacity: 1, x: 0 }}
               whileHover={{ y: -5 }}
               transition={{ duration: 0.5 }}
-              className="frost-bg rounded-2xl overflow-hidden shadow-lg"
-            >
-              <div className="relative h-48">
+              className="frost-bg rounded-2xl overflow-hidden shadow-lg">
+              <div className="relative h-80">
                 <Image
                   src={offer.image}
                   alt={offer.title}
@@ -50,10 +48,12 @@ const SpecialOffers = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-4 left-4 text-white">
                   <h3 className="text-2xl font-bold">{offer.title}</h3>
-                  <p className="text-sm opacity-90">Valid till: {offer.validTill}</p>
+                  <p className="text-sm opacity-90">
+                    Valid till: {offer.validTill}
+                  </p>
                 </div>
               </div>
-              
+
               <div className="p-6">
                 <p className="text-gray-600 dark:text-gray-300 mb-4">
                   {offer.description}
@@ -67,8 +67,7 @@ const SpecialOffers = () => {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="btn-primary text-sm"
-                  >
+                    className="btn-primary text-sm">
                     Claim Offer
                   </motion.button>
                 </div>

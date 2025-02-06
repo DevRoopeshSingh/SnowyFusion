@@ -28,11 +28,11 @@ const HeroSection = ({ onMenuClick }) => {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       <FloatingSnowflakes />
-      
+
       {/* Background Layers */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 to-white dark:from-gray-900/50 dark:to-gray-800" />
-        <motion.div 
+        <motion.div
           className="absolute inset-0 bg-[url('/images/patterns/snow-pattern.png')] opacity-10"
           style={{ y, opacity }}
         />
@@ -43,13 +43,11 @@ const HeroSection = ({ onMenuClick }) => {
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
+            transition={{ duration: 0.8, ease: "easeOut" }}>
             <motion.div
               initial={{ scale: 0.95 }}
               whileHover={{ scale: 1 }}
-              className="mb-8"
-            >
+              className="mb-8">
               <h1 className="text-6xl md:text-7xl font-bold mb-4">
                 <span className="gradient-text">Snowy</span>
                 <br />
@@ -60,37 +58,40 @@ const HeroSection = ({ onMenuClick }) => {
               </h2>
             </motion.div>
 
-            <motion.p 
+            <motion.p
               className="text-gray-600 dark:text-gray-300 text-lg mb-8 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
+              transition={{ delay: 0.2 }}>
               Experience the magic of Indian street flavors with a winter twist.
-              From <span className="font-semibold text-blue-600 dark:text-blue-400">Kesar Malai Gola</span> to 
-              <span className="font-semibold text-teal-600 dark:text-teal-400"> Dragon Fruit Boba Tea</span>,
-              every treat is a frosty adventure.
+              From{" "}
+              <span className="font-semibold text-blue-600 dark:text-blue-400">
+                Kesar Malai Gola
+              </span>{" "}
+              to
+              <span className="font-semibold text-teal-600 dark:text-teal-400">
+                {" "}
+                Dragon Fruit Boba Tea
+              </span>
+              , every treat is a frosty adventure.
             </motion.p>
 
-            <motion.div 
+            <motion.div
               className="flex flex-wrap gap-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-            >
+              transition={{ delay: 0.4 }}>
               <motion.button
                 className="btn-primary"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={onMenuClick}
-              >
+                onClick={onMenuClick}>
                 Explore Menu
               </motion.button>
               <motion.button
                 className="btn-secondary"
                 whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
+                whileTap={{ scale: 0.95 }}>
                 Book Table
               </motion.button>
             </motion.div>
@@ -104,8 +105,7 @@ const HeroSection = ({ onMenuClick }) => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 + index * 0.1 }}
                   whileHover={{ y: -5 }}
-                  className="frost-bg rounded-xl p-4 text-center"
-                >
+                  className="frost-bg rounded-xl p-4 text-center">
                   <span className="text-2xl mb-2 block">{stat.icon}</span>
                   <div className="text-2xl font-bold gradient-text">
                     {stat.number}
@@ -123,13 +123,11 @@ const HeroSection = ({ onMenuClick }) => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
-            className="relative"
-          >
-            <motion.div 
+            className="relative">
+            <motion.div
               className="relative h-[600px] w-full"
               whileHover={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
+              transition={{ type: "spring", stiffness: 300 }}>
               <Image
                 src="/images/hero/main-gola.png"
                 alt="Signature Gola"
@@ -137,7 +135,7 @@ const HeroSection = ({ onMenuClick }) => {
                 className="object-contain"
                 priority
               />
-              
+
               {/* Decorative Elements */}
               {[...Array(5)].map((_, i) => (
                 <motion.div
@@ -156,8 +154,7 @@ const HeroSection = ({ onMenuClick }) => {
                     delay: i * 0.2,
                     repeat: Infinity,
                     repeatType: "reverse",
-                  }}
-                >
+                  }}>
                   <Image
                     src="/images/decorative/snowflake.png"
                     alt="Snowflake"
@@ -176,10 +173,14 @@ const HeroSection = ({ onMenuClick }) => {
       <motion.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
         animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      >
-        <div className="text-gray-400 dark:text-gray-500 text-sm">Scroll Down</div>
-        <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-teal-400 mx-auto mt-2 rounded-full" />
+        transition={{ duration: 2, repeat: Infinity }}>
+        <div className="text-gray-400 dark:text-gray-500 text-sm">
+          Scroll Down
+        </div>
+        <div className="flex flex-col items-center mt-2">
+          <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-teal-400 rounded-full" />
+          <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-b-blue-500 mt-1" />
+        </div>
       </motion.div>
     </section>
   );

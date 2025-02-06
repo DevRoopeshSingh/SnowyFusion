@@ -13,9 +13,8 @@ const FeaturedItems = ({ items }) => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2 }}
-              className="glass-card p-6 dark:hover:bg-gray-800/60"
-            >
-              <div className="relative h-48 mb-4">
+              className="glass-card p-6 dark:hover:bg-gray-800/60">
+              <div className="relative h-72 mb-4">
                 <Image
                   src={`/images/menu/${item.image}`}
                   alt={item.name}
@@ -24,7 +23,9 @@ const FeaturedItems = ({ items }) => {
                 />
               </div>
               <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-sm">{item.description}</p>
+              <p className="text-gray-600 dark:text-gray-300 text-sm">
+                {item.description}
+              </p>
               <div className="mt-4 flex justify-between items-center">
                 <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
                   {item.price}
