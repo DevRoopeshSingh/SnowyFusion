@@ -1,0 +1,55 @@
+{
+  "header": {
+    "title": "Snowy Fusion",
+    "home": "Home",
+    "menu": "Menu",
+    "contact": "Contact"
+  },
+  "hero": {
+    "welcomeText": "Welcome to Snowy Fusion!",
+    "tagline": "Delicious food for every mood.",
+    "menuButton": "Explore Menu"
+  },
+  "menuSection": {
+    "title": "Our Menu",
+    "searchPlaceholder": "Search for food items..."
+  },
+  "contactSection": {
+    "title": "Contact Us",
+    "formNameLabel": "Your Name",
+    "formEmailLabel": "Your Email",
+    "formMessageLabel": "Message",
+    "formSubmitButton": "Send Message"
+  },
+  "footer": {
+    "copyright": "© 2025 Snowy Fusion. All rights reserved."
+  },
+  "seasonalSpecials": {
+    "title": "Seasonal Specials",
+    "viewAll": "View All Specials"
+  },
+  "featuredItems": {
+    "title": "Featured Items",
+    "popularItems": "Our Most Popular Dishes"
+  },
+  "specialOffers": {
+    "title": "Special Offers",
+    "discountMessage": "Enjoy great discounts on selected items!"
+  },
+  "testimonials": {
+    "title": "What Our Customers Say"
+  },
+  "cart": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty.",
+    "item": "Item",
+    "quantity": "Quantity",
+    "price": "Price",
+    "total": "Total",
+    "checkout": "Checkout",
+    "remove": "Remove"
+  },
+  "search": {
+    "placeholder": "Search menu items..."
+  }
+}

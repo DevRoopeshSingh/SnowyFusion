@@ -1,0 +1,55 @@
+{
+  "header": {
+    "title": "स्नोई फ्यूजन",
+    "home": "होम",
+    "menu": "मेनू",
+    "contact": "संपर्क करें"
+  },
+  "hero": {
+    "welcomeText": "स्नोई फ्यूजन में आपका स्वागत है!",
+    "tagline": "हर मूड के लिए स्वादिष्ट भोजन।",
+    "menuButton": "मेनू देखें"
+  },
+  "menuSection": {
+    "title": "हमारा मेनू",
+    "searchPlaceholder": "भोजन आइटम खोजें..."
+  },
+  "contactSection": {
+    "title": "संपर्क करें",
+    "formNameLabel": "आपका नाम",
+    "formEmailLabel": "आपका ईमेल",
+    "formMessageLabel": "संदेश",
+    "formSubmitButton": "संदेश भेजें"
+  },
+  "footer": {
+    "copyright": "© 2025 स्नोई फ्यूजन। सर्वाधिकार सुरक्षित।"
+  },
+  "seasonalSpecials": {
+    "title": "मौसमी विशेष",
+    "viewAll": "सभी विशेष देखें"
+  },
+  "featuredItems": {
+    "title": "विशेष आइटम",
+    "popularItems": "हमारे सबसे लोकप्रिय व्यंजन"
+  },
+  "specialOffers": {
+    "title": "विशेष ऑफ़र",
+    "discountMessage": "चयनित वस्तुओं पर शानदार छूट का आनंद लें!"
+  },
+  "testimonials": {
+    "title": "हमारे ग्राहक क्या कहते हैं"
+  },
+  "cart": {
+    "title": "आपकी टोकरी",
+    "empty": "आपकी टोकरी खाली है।",
+    "item": "आइटम",
+    "quantity": "मात्रा",
+    "price": "मूल्य",
+    "total": "कुल",
+    "checkout": "चेकआउट",
+    "remove": "हटाएं"
+  },
+  "search": {
+    "placeholder": "मेनू आइटम खोजें..."
+  }
+}

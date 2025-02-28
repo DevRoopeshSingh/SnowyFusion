@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { v4 as uuidv4 } from "uuid"; // For unique cart item IDs
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SnowEffect from "@/components/effects/SnowEffect";
@@ -12,15 +13,18 @@ import CartDrawer from "@/components/cart/CartDrawer";
 import QuickViewModal from "@/components/menu/QuickViewModal";
 import SearchOverlay from "@/components/search/SearchOverlay";
 import MenuSection from "@/components/menu/MenuSection";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 // Dynamic imports
-const HeroSection = dynamic(() => import("@/components/home/HeroSection"));
-const Menu = dynamic(() => import("@/components/menu/Menu"));
-const FeaturedItems = dynamic(() => import("@/components/home/FeaturedItems"));
-
-// Dynamically import sections to avoid any potential SSR issues
-const ContactSection = dynamic(() =>
-  import("@/components/contact/ContactSection")
+const HeroSection = dynamic(() => import("@/components/home/HeroSection"), {
+  ssr: false,
+});
+const FeaturedItems = dynamic(() => import("@/components/home/FeaturedItems"), {
+  ssr: false,
+});
+const ContactSection = dynamic(
+  () => import("@/components/contact/ContactSection"),
+  { ssr: false }
 );
 
 export default function Home({ menuData, error }) {
@@ -32,100 +36,106 @@ export default function Home({ menuData, error }) {
   const [selectedItem, setSelectedItem] = useState(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredMenu, setFilteredMenu] = useState(menuData);
 
+  // Handle menu navigation
   const handleMenuClick = useCallback(() => {
     setActiveSection("menu");
   }, []);
 
-  const addToOrder = useCallback((item) => {
-    setCartItems((prev) => [...prev, { ...item, id: Date.now() }]);
+  // Add item to cart with unique ID
+  const addToOrder = useCallback((item, selectedCustomizations = []) => {
+    setCartItems((prev) => [
+      ...prev,
+      { ...item, cartId: uuidv4(), selectedCustomizations },
+    ]);
   }, []);
 
-  const removeFromOrder = useCallback((itemId) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== itemId));
+  // Remove item from cart
+  const removeFromOrder = useCallback((cartId) => {
+    setCartItems((prev) => prev.filter((item) => item.cartId !== cartId));
   }, []);
 
+  // Handle quick view
+  const openQuickView = useCallback((item) => {
+    setSelectedItem(item);
+    setIsQuickViewOpen(true);
+  }, []);
+
+  // Simulate initial loading (replace with real dynamic import tracking if needed)
   useEffect(() => {
-    // Simulate loading time for dynamic imports
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-
+    const timer = setTimeout(() => setIsLoading(false), 500);
     return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    if (searchQuery.trim() === "") {
-      setFilteredMenu(menuData);
-      return;
-    }
-
-    const query = searchQuery.toLowerCase();
-    const filtered = {
-      categories: menuData.categories
-        .map((category) => ({
-          ...category,
-          items: category.items.filter(
-            (item) =>
-              item.name.toLowerCase().includes(query) ||
-              item.description.toLowerCase().includes(query)
-          ),
-        }))
-        .filter((category) => category.items.length > 0),
-    };
-
-    setFilteredMenu(filtered);
-  }, [searchQuery, menuData]);
-
-  // Add error handling in the UI
+  // Error handling
   if (error) {
-    return <div className="text-center p-8">Error: {error}</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-teal-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <div className="text-center p-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+          <h1 className="text-2xl font-bold text-red-600">
+            Oops! Something went wrong
+          </h1>
+          <p className="mt-2 text-gray-600 dark:text-gray-300">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-4 px-4 py-2 bg-primary-500 text-white rounded-full hover:bg-primary-600">
+            Retry
+          </button>
+        </div>
+      </div>
+    );
   }
 
-  // Add loading indicator in the return statement
   if (isLoading) {
     return <Loading />;
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-teal-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <SnowEffect />
+      <SnowEffect snowflakeCount={30} speed={10} />
       <Header
         activeSection={activeSection}
         setActiveSection={setActiveSection}
         cartCount={cartItems.length}
         onCartClick={() => setIsCartOpen(true)}
         onSearch={setSearchQuery}
-        onSearchClick={() => setIsSearchOpen(true)}
-      />
+        onSearchClick={() => setIsSearchOpen(true)}>
+        <LanguageSwitcher />
+      </Header>
 
-      <main>
+      <main className="relative z-10">
         {activeSection === "home" && (
-          <>
+          <section role="region" aria-label="Home Content">
             <HeroSection onMenuClick={handleMenuClick} />
             <SeasonalSpecials />
             <FeaturedItems
-              items={
-                (menuData?.categories || [])
-                  .flatMap((category) => category?.items || [])
-                  .filter((item) => item?.popular) || []
-              }
+              items={menuData.categories
+                .flatMap((category) => category.items)
+                .filter((item) => item.popular)}
+              onItemClick={openQuickView}
             />
             <SpecialOffers />
             <Testimonials />
-          </>
+          </section>
         )}
 
         {activeSection === "menu" && menuData && (
-          <MenuSection menuData={menuData} addToOrder={addToOrder} />
+          <section role="region" aria-label="Menu">
+            <MenuSection
+              menuData={menuData}
+              addToOrder={addToOrder}
+              searchQuery={searchQuery} // Pass search query to MenuSection
+            />
+          </section>
         )}
 
         {activeSection === "contact" && (
-          <ContactSection
-            cartItems={cartItems}
-            removeFromOrder={removeFromOrder}
-          />
+          <section role="region" aria-label="Contact">
+            <ContactSection
+              cartItems={cartItems}
+              removeFromOrder={removeFromOrder}
+            />
+          </section>
         )}
       </main>
 
@@ -153,6 +163,8 @@ export default function Home({ menuData, error }) {
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
         menuData={menuData}
+        onSearch={setSearchQuery}
+        onItemClick={openQuickView}
       />
     </div>
   );
@@ -161,18 +173,14 @@ export default function Home({ menuData, error }) {
 export async function getStaticProps() {
   try {
     const menuData = await import("../../public/data/menu.json");
-    const defaultMenuData = {
-      categories: [],
-    };
+    const defaultMenuData = { categories: [] };
 
-    // Transform the array structure to categories
     const combinedMenuData = {
       categories: menuData.default
         .map((category) => {
           if (!category) return null;
 
           if (category.items) {
-            // This is a category with nested items
             return {
               name: category.category || "Uncategorized",
               description: category.description || "",
@@ -187,16 +195,15 @@ export async function getStaticProps() {
                 price: item.price || "₹0",
                 image:
                   item.image || "/images/placeholders/food-placeholder.jpg",
-                isVegetarian: item.isVegetarian || false,
-                isSpicy: item.isSpicy || false,
-                popular: item.popular || false,
+                isVegetarian: item.isVegetarian ?? false,
+                isSpicy: item.isSpicy ?? false,
+                popular: item.popular ?? false,
                 calories: item.calories || "N/A",
                 preparationTime: item.preparationTime || "5-10 mins",
                 customizations: item.customizations || [],
               })),
             };
           } else {
-            // This is a category that is also an item
             return {
               name: category.category || "Menu",
               description: category.description || "",
@@ -213,9 +220,9 @@ export async function getStaticProps() {
                   image:
                     category.image ||
                     "/images/placeholders/food-placeholder.jpg",
-                  isVegetarian: category.isVegetarian || false,
-                  isSpicy: category.isSpicy || false,
-                  popular: category.popular || false,
+                  isVegetarian: category.isVegetarian ?? false,
+                  isSpicy: category.isSpicy ?? false,
+                  popular: category.popular ?? false,
                   calories: category.calories || "N/A",
                   preparationTime: category.preparationTime || "5-10 mins",
                   customizations: category.customizations || [],
@@ -228,28 +235,18 @@ export async function getStaticProps() {
         .filter((category) => category.items && category.items.length > 0),
     };
 
-    // Ensure all values are serializable
-    const serializedData = JSON.parse(JSON.stringify(combinedMenuData));
-
-    console.log(
-      "Transformed Menu Data:",
-      JSON.stringify(serializedData, null, 2)
-    );
-
     return {
       props: {
-        menuData: serializedData || defaultMenuData,
+        menuData: combinedMenuData || defaultMenuData,
       },
-      revalidate: 3600,
+      revalidate: 3600, // Revalidate every hour
     };
   } catch (error) {
-    console.error("Error loading menu data:", error);
+    console.error("Error loading menu data:", error.message);
     return {
       props: {
-        menuData: {
-          categories: [],
-        },
-        error: "Failed to load menu data",
+        menuData: { categories: [] },
+        error: "Failed to load menu data. Please try again later.",
       },
     };
   }

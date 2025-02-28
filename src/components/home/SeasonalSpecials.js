@@ -32,18 +32,18 @@ const SeasonalSpecials = () => {
               initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="snow-card relative overflow-hidden"
-            >
+              className="snow-card relative overflow-hidden">
               <div className="absolute top-4 right-4 z-10">
-                <span className={`px-3 py-1 rounded-full text-sm ${
-                  special.available 
-                    ? 'bg-green-100 text-green-600'
-                    : 'bg-blue-100 text-blue-600'
-                }`}>
+                <span
+                  className={`px-3 py-1 rounded-full text-sm ${
+                    special.available
+                      ? "bg-green-100 text-green-600"
+                      : "bg-blue-100 text-blue-600"
+                  }`}>
                   {special.season}
                 </span>
               </div>
-              <div className="relative h-48 mb-4">
+              <div className="relative h-72 mb-4">
                 <Image
                   src={special.image}
                   alt={special.name}
@@ -59,9 +59,7 @@ const SeasonalSpecials = () => {
                     {special.price}
                   </span>
                   {special.available && (
-                    <button className="btn-primary text-sm">
-                      Order Now
-                    </button>
+                    <button className="btn-primary text-sm">Order Now</button>
                   )}
                 </div>
               </div>

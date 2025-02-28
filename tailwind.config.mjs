@@ -8,7 +8,7 @@ const config = {
         primary: {
           50: "#f0f9ff",
           100: "#e0f2fe",
-          200: "#bae6fd",
+          200: "#bae6fd", // Deeper blue for better contrast
           300: "#7dd3fc",
           400: "#38bdf8",
           500: "#0ea5e9",
@@ -51,6 +51,10 @@ const config = {
           text: "#ffffff",
           muted: "#a3a3a3",
         },
+        gray: {
+          700: "#374151", // Darker gray for contrast on light backgrounds
+          200: "#e5e7eb", // Lighter gray for contrast on dark backgrounds
+        },
       },
       fontFamily: {
         heading: ["Poppins", "sans-serif"],
@@ -79,6 +83,10 @@ const config = {
         snow: {
           "0%": { transform: "translateY(-10vh)" },
           "100%": { transform: "translateY(100vh)" },
+        },
+        bounce: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-5px)" },
         },
       },
       backgroundImage: {
@@ -114,11 +122,19 @@ const config = {
           lg: "4rem",
           xl: "5rem",
           "2xl": "6rem",
+          "3xl": "8rem", // Added for larger screens
         },
       },
       backdropFilter: {
         none: "none",
         blur: "blur(20px)",
+      },
+      // Add accessibility utilities
+      accessibility: {
+        focus: {
+          ring: "2px solid",
+          ringColor: "primary-600",
+        },
       },
     },
   },
@@ -126,6 +142,7 @@ const config = {
     require("@tailwindcss/forms"),
     require("@tailwindcss/typography"),
     require("@tailwindcss/aspect-ratio"),
+    // Add plugin for accessibility if needed (e.g., tailwindcss-accessibility)
   ],
 };
 
