@@ -9,6 +9,11 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
   useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_GA_ID) {
+      console.warn("Google Analytics ID is not set. Analytics will not load.");
+      return;
+    }
+
     initGA();
     const handleRouteChange = (url) => {
       pageview(url);
@@ -24,6 +29,7 @@ function MyApp({ Component, pageProps }) {
       <Script
         strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+        onError={(e) => console.error("GA script failed to load:", e.message)}
       />
       <Script
         id="gtag-init"
@@ -38,21 +44,23 @@ function MyApp({ Component, pageProps }) {
             });
           `,
         }}
+        onError={(e) => console.error("GA initialization failed:", e.message)}
       />
       <Component {...pageProps} />
     </ThemeProvider>
   );
 }
 
-MyApp.getInitialProps = async (appContext) => {
-  const { Component, ctx } = appContext;
-  let pageProps = {};
+// Remove getInitialProps to enable Automatic Static Optimization
+// MyApp.getInitialProps = async (appContext) => {
+//   const { Component, ctx } = appContext;
+//   let pageProps = {};
 
-  if (Component.getInitialProps) {
-    pageProps = await Component.getInitialProps(ctx);
-  }
+//   if (Component.getInitialProps) {
+//     pageProps = await Component.getInitialProps(ctx);
+//   }
 
-  return { pageProps };
-};
+//   return { pageProps };
+// };
 
 export default MyApp;
