@@ -22,37 +22,41 @@ export default function Header({ activeSection, setActiveSection, cartCount }) {
             <button
               key={item}
               onClick={() => setActiveSection(item)}
-              className={`capitalize transition-colors text-lg font-medium ${
+              className={`capitalize transition-colors text-lg font-medium px-3 py-2 rounded-lg ${
                 activeSection === item
-                  ? "text-blue-600 dark:text-teal-400 underline"
+                  ? "text-blue-600 dark:text-teal-400 underline font-semibold bg-blue-100 dark:bg-teal-800"
                   : "text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-teal-400"
               }`}>
               {item}
             </button>
           ))}
 
-          {/* Cart Icon */}
-          {cartCount > 0 && (
-            <div className="relative">
-              <FiShoppingCart className="text-2xl text-gray-700 dark:text-gray-300" />
+          {/* Cart Icon (Desktop) */}
+          <button
+            onClick={() => setActiveSection("cart")}
+            className="relative"
+            aria-label="Open cart">
+            <FiShoppingCart className="text-2xl text-gray-700 dark:text-gray-300" />
+            {cartCount > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
                 {cartCount}
               </span>
-            </div>
-          )}
+            )}
+          </button>
         </div>
 
         {/* Mobile Navigation Button */}
         <button
           className="md:hidden text-2xl"
-          onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}>
+          onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
+          aria-label={isMobileNavOpen ? "Close menu" : "Open menu"}>
           {isMobileNavOpen ? <FiX /> : <FiMenu />}
         </button>
       </nav>
 
       {/* Mobile Navigation Menu */}
       {isMobileNavOpen && (
-        <div className="md:hidden bg-white dark:bg-gray-800 py-4 px-6 shadow-lg">
+        <div className="md:hidden bg-white dark:bg-gray-800 py-4 px-6 shadow-lg transition-opacity duration-300 opacity-100">
           {navItems.map((item) => (
             <button
               key={item}
@@ -64,16 +68,6 @@ export default function Header({ activeSection, setActiveSection, cartCount }) {
               {item}
             </button>
           ))}
-
-          {/* Cart Icon in Mobile */}
-          {cartCount > 0 && (
-            <div className="flex justify-center mt-3">
-              <FiShoppingCart className="text-2xl text-gray-700 dark:text-gray-300" />
-              <span className="ml-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                {cartCount}
-              </span>
-            </div>
-          )}
         </div>
       )}
     </header>

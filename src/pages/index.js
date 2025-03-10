@@ -5,15 +5,15 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SnowEffect from "@/components/effects/SnowEffect";
 import WhatsAppButton from "@/components/common/WhatsAppButton";
-import Testimonials from "@/components/home/Testimonials";
-import SeasonalSpecials from "@/components/home/SeasonalSpecials";
-import SpecialOffers from "@/components/home/SpecialOffers";
 import Loading from "@/components/common/Loading";
 import CartDrawer from "@/components/cart/CartDrawer";
 import QuickViewModal from "@/components/menu/QuickViewModal";
 import SearchOverlay from "@/components/search/SearchOverlay";
 import MenuSection from "@/components/menu/MenuSection";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import ErrorComponent from "./ErrorComponent";
+import { useCart } from "@/context/CartContext";
+import HomeSection from "./HomeSection";
 
 // Dynamic imports
 const HeroSection = dynamic(() => import("@/components/home/HeroSection"), {
@@ -29,7 +29,7 @@ const ContactSection = dynamic(
 
 export default function Home({ menuData, error }) {
   const [activeSection, setActiveSection] = useState("home");
-  const [cartItems, setCartItems] = useState([]);
+  const { cart, addToCart, removeFromCart } = useCart();
   const [isLoading, setIsLoading] = useState(true);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -43,17 +43,12 @@ export default function Home({ menuData, error }) {
   }, []);
 
   // Add item to cart with unique ID
-  const addToOrder = useCallback((item, selectedCustomizations = []) => {
-    setCartItems((prev) => [
-      ...prev,
-      { ...item, cartId: uuidv4(), selectedCustomizations },
-    ]);
-  }, []);
-
-  // Remove item from cart
-  const removeFromOrder = useCallback((cartId) => {
-    setCartItems((prev) => prev.filter((item) => item.cartId !== cartId));
-  }, []);
+  const addToOrder = useCallback(
+    (item, selectedCustomizations = []) => {
+      addToCart({ ...item, cartId: uuidv4(), selectedCustomizations });
+    },
+    [addToCart]
+  );
 
   // Handle quick view
   const openQuickView = useCallback((item) => {
@@ -69,21 +64,7 @@ export default function Home({ menuData, error }) {
 
   // Error handling
   if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-teal-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-        <div className="text-center p-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-          <h1 className="text-2xl font-bold text-red-600">
-            Oops! Something went wrong
-          </h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-300">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="mt-4 px-4 py-2 bg-primary-500 text-white rounded-full hover:bg-primary-600">
-            Retry
-          </button>
-        </div>
-      </div>
-    );
+    return <ErrorComponent error={error} />;
   }
 
   if (isLoading) {
@@ -96,7 +77,7 @@ export default function Home({ menuData, error }) {
       <Header
         activeSection={activeSection}
         setActiveSection={setActiveSection}
-        cartCount={cartItems.length}
+        cartCount={cart.length}
         onCartClick={() => setIsCartOpen(true)}
         onSearch={setSearchQuery}
         onSearchClick={() => setIsSearchOpen(true)}>
@@ -105,18 +86,23 @@ export default function Home({ menuData, error }) {
 
       <main className="relative z-10">
         {activeSection === "home" && (
-          <section role="region" aria-label="Home Content">
-            <HeroSection onMenuClick={handleMenuClick} />
-            <SeasonalSpecials />
-            <FeaturedItems
-              items={menuData.categories
-                .flatMap((category) => category.items)
-                .filter((item) => item.popular)}
-              onItemClick={openQuickView}
-            />
-            <SpecialOffers />
-            <Testimonials />
-          </section>
+          // <section role="region" aria-label="Home Content">
+          //   <HeroSection onMenuClick={handleMenuClick} />
+          //   <SeasonalSpecials />
+          //   <FeaturedItems
+          //     items={menuData.categories
+          //       .flatMap((category) => category.items)
+          //       .filter((item) => item.popular)}
+          //     onItemClick={openQuickView}
+          //   />
+          //   <SpecialOffers />
+          //   <Testimonials />
+          // </section>
+          <HomeSection
+            menuData={menuData}
+            onMenuClick={handleMenuClick}
+            onItemClick={openQuickView}
+          />
         )}
 
         {activeSection === "menu" && menuData && (
@@ -131,10 +117,7 @@ export default function Home({ menuData, error }) {
 
         {activeSection === "contact" && (
           <section role="region" aria-label="Contact">
-            <ContactSection
-              cartItems={cartItems}
-              removeFromOrder={removeFromOrder}
-            />
+            <ContactSection cartItems={cart} removeFromOrder={removeFromCart} />
           </section>
         )}
       </main>
@@ -145,8 +128,8 @@ export default function Home({ menuData, error }) {
       <CartDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
-        items={cartItems}
-        onRemove={removeFromOrder}
+        items={cart}
+        onRemove={removeFromCart}
       />
 
       <QuickViewModal
@@ -156,7 +139,7 @@ export default function Home({ menuData, error }) {
           setIsQuickViewOpen(false);
           setSelectedItem(null);
         }}
-        onAddToCart={addToOrder}
+        onAddToCart={addToCart}
       />
 
       <SearchOverlay

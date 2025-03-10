@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import { CartProvider } from "@/context/CartContext";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Script from "next/script";
@@ -26,16 +27,17 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ThemeProvider>
-      <Script
-        strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-        onError={(e) => console.error("GA script failed to load:", e.message)}
-      />
-      <Script
-        id="gtag-init"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
+      <CartProvider>
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+          onError={(e) => console.error("GA script failed to load:", e.message)}
+        />
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
@@ -43,10 +45,11 @@ function MyApp({ Component, pageProps }) {
               page_path: window.location.pathname,
             });
           `,
-        }}
-        onError={(e) => console.error("GA initialization failed:", e.message)}
-      />
-      <Component {...pageProps} />
+          }}
+          onError={(e) => console.error("GA initialization failed:", e.message)}
+        />
+        <Component {...pageProps} />
+      </CartProvider>
     </ThemeProvider>
   );
 }

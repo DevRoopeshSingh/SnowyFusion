@@ -2,8 +2,10 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaLeaf, FaFire } from "react-icons/fa";
 import OptimizedImage from "../common/OptimizedImage";
+import { useCart } from "@/context/CartContext";
 
-const MenuItem = ({ item, onOrder }) => {
+const MenuItem = ({ item }) => {
+  const { addToCart } = useCart();
   const [selectedCustomizations, setSelectedCustomizations] = useState([]);
 
   const handleCustomizationChange = (option) => {
@@ -15,9 +17,11 @@ const MenuItem = ({ item, onOrder }) => {
   };
 
   const handleOrder = () => {
-    onOrder({
+    addToCart({
       ...item,
       selectedCustomizations,
+      // Ensure price is stored as number
+      price: parseFloat(item.price.replace(/[^0-9.]/g, "")),
     });
     setSelectedCustomizations([]);
   };

@@ -5,7 +5,13 @@ import OptimizedImage from '../common/OptimizedImage';
 
 const CartDrawer = ({ isOpen, onClose, items, onRemove }) => {
   const total = items.reduce((sum, item) => {
-    const price = parseFloat(item.price.replace('₹', ''));
+    const price =
+      typeof item.price === "string"
+        ? parseFloat(item.price.replace("₹", "").trim())
+        : typeof item.price === "number"
+        ? item.price
+        : 0; // Default to 0 if price is invalid
+
     return sum + price;
   }, 0);
 

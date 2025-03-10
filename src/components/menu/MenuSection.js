@@ -78,7 +78,7 @@ const FilterControls = ({
         {categories.map((category) => (
           <a
             key={category.name}
-            href={`#${category.name.toLowerCase().replace(/\s+/g, "-")}`}
+            href={`#${category?.name?.toLowerCase().replace(/\s+/g, "-")}`}
             className="block px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
             {category.name}
           </a>
